@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <link rel="stylesheet" href="index.css">
+  <style>
+    body{
+      color: rgb(45, 102, 104);
+      background-color: rgb(166, 194, 247);
+    }
+    h1{
+        color: rgb(7, 59, 7);
+    }
+.heading{
+  width: 100%;
+  height: 60px;
+  text-align: center;
+}
+#data>div{
+  width: 70%;
+  height: auto;
+  text-align: center;
+}
+#data>div>img{
+  width: 70%;
+  height: 350px;
+  border-radius: 10px;
+
+}
+  </style>
+  <body>
+    <div id="container"></div>
+
+    <div class="heading"><h1>Randome Recipe </h1></div>
+
+    <div id="data"></div>
+  </body>
+</html>
+<script type="module">
+
+ 
+
+  import navbar from "./components/navbar.js";
+  // console.log("navbar:",navbar);
+
+  let container = document.getElementById("container");
+  container.innerHTML = navbar();
+
+  
+
+
+
+///////////////// getData and appendDAta
+
+import {getData, appendData} from "./scripts/showData.js";
+
+//  console.log("getData:", getData, appendData);
+
+
+  function showRecipe(){
+
+  
+let div = document.getElementById("data");
+div.innerHTML = null;
+
+let recipe = document.getElementById("byname").value;
+
+let response = getData(`https://www.themealdb.com/api/json/v1/1/random.php`)
+
+response
+.then((res)=>{
+  // console.log(res.meals);
+  let {meals} = res;
+
+  appendData(meals,div);
+
+
+
+
+
+})
+.catch((err)=>{
+  console.log(err);
+})
+
+
+
+
+
+}
+
+showRecipe()
+
+
+
+  
+</script>

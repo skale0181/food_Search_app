@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <link rel="stylesheet" href="index.css">
+<style>
+    body{
+        color: rgb(45, 102, 104);
+      background-color: rgb(166, 194, 247);
+    }
+    h1{
+        color: rgb(7, 59, 7);
+    }
+    .heading{
+      width: 100%;
+      height: 60px;
+      text-align: center;
+    }
+    #data{
+        width: 100%;
+        height: auto;
+    }
+    #data>div{
+        margin: auto;
+        width: 70%;
+        height: auto;
+        text-align: center;
+    }
+    #data>div>img{
+        border-radius: 10px;
+        width: 70%;
+        height: 360px;
+    }
+</style>
+
+  <body>
+   <div id="container"></div>
+   <div class="heading"><h1> Latest recipes</h1></div>
+   <div id="data"></div>
+  </body>
+</html>
+
+
+<script type="module">  //// without type module wi cant import data from other file 
+
+    
+
+    import navbar from "./components/navbar.js";
+    // console.log("navbar:",navbar);
+
+    let container = document.getElementById("container");
+    container.innerHTML = navbar();                        //// call navbar function here  to get data from another file
+
+
+
+    let button = document.getElementById("btn");
+    button.addEventListener("click",showRecipe)
+
+    import {getData, appendData} from "./scripts/showData.js";
+    //  console.log("data:", getData, appendData);
+
+    function showRecipe(){
+
+  
+      let div = document.getElementById("data");
+    //   div.innerHTML = null;            /////// no need to make it null
+  
+      let recipe = document.getElementById("byname").value;
+  
+      let response = getData(`https://www.themealdb.com/api/json/v1/1/search.php?f=a`)
+  
+      response
+      .then((res)=>{
+        // console.log(res.meals);
+        let {meals} = res;
+
+        appendData(meals,div);
+
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
+
+    }
+
+showRecipe()
+
+
+
+
+</script>
